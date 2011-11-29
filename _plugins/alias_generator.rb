@@ -49,19 +49,20 @@ module Jekyll
     def generate_aliases(destination_path, aliases)
       alias_paths ||= Array.new
       alias_paths << aliases
-      alias_paths.delete(nil)
+      alias_paths.compact!
 
       alias_paths.flatten.each do |alias_path|
-        path = File.join(@site.dest, alias_path)
+        path             = File.join(@site.dest, alias_path)
+        alias_index_path = File.join(alias_path, "index.html")
 
-        FileUtils.mkdir_p(File.dirname(path))
+        FileUtils.mkdir_p(path)
 
-        File.open(path, 'w') do |file|
+        File.open(File.join(path, "index.html"), 'w') do |file|
           file.write(alias_template(destination_path))
         end
 
-        (alias_path.split('/').size + 1).times do |sections|
-          @site.static_files << Jekyll::AliasFile.new(@site, @site.dest, alias_path.split('/')[0, sections].join('/'), nil)
+        (alias_index_path.split('/').size + 1).times do |sections|
+          @site.static_files << Jekyll::AliasFile.new(@site, @site.dest, alias_index_path.split('/')[0, sections].join('/'), nil)
         end
       end
     end
