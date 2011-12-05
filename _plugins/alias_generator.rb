@@ -36,6 +36,7 @@ module Jekyll
       puts "AliasGenerator loading..."
 
       process_posts
+      process_pages
     end
 
     def process_posts
@@ -43,6 +44,14 @@ module Jekyll
 
       @site.posts.each do |post|
         generate_aliases(post.url, post.data['alias'])
+      end
+    end
+
+    def process_pages
+      puts "Processing #{@site.pages.size.to_s} page(s) for aliases..."
+
+      @site.pages.each do |page|
+        generate_aliases(page.destination(''), page.data['alias'])
       end
     end
 
