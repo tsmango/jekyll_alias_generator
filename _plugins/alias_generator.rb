@@ -51,7 +51,7 @@ module Jekyll
       puts "Processing #{@site.pages.size.to_s} page(s) for aliases..."
 
       @site.pages.each do |page|
-        generate_aliases(page.destination(''), page.data['alias'])
+        generate_aliases(page.destination('').gsub(/index\.(html|htm)$/, ''), page.data['alias'])
       end
     end
 
