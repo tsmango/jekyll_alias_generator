@@ -1,4 +1,6 @@
-# Alias Generator for Posts.
+# jekyll_alias_generator 0.1.0
+# 
+# Alias Generator for Posts
 #
 # Generates redirect pages for posts with aliases set in the YAML Front Matter.
 #
@@ -27,12 +29,22 @@
 # Site Source: http://github.com/tsmango/thomasmango.com
 # PLugin License: MIT
 
+require 'open-uri'
+
 module Jekyll
 
   class AliasGenerator < Generator
 
     def generate(site)
       @site = site
+
+      site.config['alias'] = site.config['alias'] || {}
+      @type = site.config['alias']['type'] || 'html'
+      if (@type != 'html' && @type != 'php')
+        raise "Unsupported type for alias generator: #{@type}"
+      end
+      path = File.join File.dirname(__FILE__), 'alias_index.' + @type
+      @template = File.read path
 
       process_posts
       process_pages
@@ -59,7 +71,8 @@ module Jekyll
         alias_path = alias_path.to_s
 
         alias_dir  = File.extname(alias_path).empty? ? alias_path : File.dirname(alias_path)
-        alias_file = File.extname(alias_path).empty? ? "index.html" : File.basename(alias_path)
+        alias_dir  = URI::encode(alias_dir)
+        alias_file = File.extname(alias_path).empty? ? "index." + @type : File.basename(alias_path)
 
         fs_path_to_dir   = File.join(@site.dest, alias_dir)
         alias_index_path = File.join(alias_dir, alias_file)
@@ -77,16 +90,7 @@ module Jekyll
     end
 
     def alias_template(destination_path)
-      <<-EOF
-      <!DOCTYPE html>
-      <html>
-      <head>
-      <link rel="canonical" href="#{destination_path}"/>
-      <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-      <meta http-equiv="refresh" content="0;url=#{destination_path}" />
-      </head>
-      </html>
-      EOF
+      @template.gsub "\#{destination_path}", destination_path
     end
   end
 
