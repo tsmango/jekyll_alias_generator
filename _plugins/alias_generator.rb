@@ -53,6 +53,10 @@ module Jekyll
     def generate_aliases(destination_path, aliases)
       alias_paths ||= Array.new
       alias_paths << aliases
+      # New jekyll versions transform the category in the url to lower case.
+      # The following fix includes the old variant as an alias - at least 
+      # for categories that _start_ with an upper case character.
+      alias_paths << destination_path.sub(/\w/) { $&.upcase }
       alias_paths.compact!
 
       alias_paths.flatten.each do |alias_path|
