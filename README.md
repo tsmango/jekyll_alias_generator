@@ -28,3 +28,7 @@ Example Post Configuration:
       title: "How I Keep Limited Pressing Running"
       alias: [/first-alias/index.html, /second-alias/index.html]
     ---
+
+## License
+
+Released under the MIT license.
