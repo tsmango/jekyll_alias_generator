@@ -70,7 +70,7 @@ module Jekyll
           file.write(alias_template(destination_path))
         end
         (alias_index_path.split('/').size).times do |sections|
-            @site.static_files << Jekyll::AliasFile.new(@site, @site.dest, alias_index_path.split('/')[1, sections + 1].join('/'), '')
+          @site.static_files << Jekyll::AliasFile.new(@site, @site.dest, alias_index_path.split('/')[1, sections + 1].join('/'), '')
         end
       end
     end
