@@ -94,10 +94,6 @@ module Jekyll
   class AliasFile < StaticFile
     require 'set'
 
-    def destination(dest)
-      File.join(dest, @dir)
-    end
-
     def modified?
       return false
     end
