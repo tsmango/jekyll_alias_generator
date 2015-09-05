@@ -62,7 +62,7 @@ module Jekyll
         alias_file = File.extname(alias_path).empty? ? "index.html" : File.basename(alias_path)
 
         fs_path_to_dir = File.join(@site.dest, alias_dir)
-        alias_sections = alias_dir.split('/')[1..-1]
+        alias_sections = alias_dir.split('/').drop(1)
 
         FileUtils.mkdir_p(fs_path_to_dir)
 
