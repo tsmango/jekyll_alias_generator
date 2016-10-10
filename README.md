@@ -3,7 +3,7 @@
 Generates redirect pages for posts with aliases set in the YAML Front Matter.
 
 ## How to Run
-Place `alias_generator.rb` in your `plugins` directory, and ensure
+Place `alias_generator.rb` in your `_plugins` directory, and ensure
 that you can run custom plugins (set `safe:` to `false` in `_config.yml`).
 Whenever you generate your Jekyll site, redirect pages will be created 
 at the alias path in your output directory; for example,
