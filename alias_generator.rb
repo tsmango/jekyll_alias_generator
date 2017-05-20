@@ -67,7 +67,7 @@ module Jekyll
         FileUtils.mkdir_p(fs_path_to_dir)
 
         File.open(File.join(fs_path_to_dir, alias_file), 'w') do |file|
-          file.write(alias_template(@site.config['url'] + destination_path))
+          file.write(alias_template(@site.config['url'] + @site.config['baseurl'] + destination_path))
         end
 
         alias_sections.size.times do |sections|
